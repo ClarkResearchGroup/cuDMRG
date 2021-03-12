@@ -5,7 +5,7 @@ python >= 3.7, numpy >= 1.19, conda install -c conda-forge cupy cutensor cudatoo
 
 To get some sense of how cuda compares with numpy, it is recommended to run benchmarks in https://gist.github.com/fukatani/4702aa05aed255cd25f42e77d0a22e37
 
-Note for dense SVD and Eigen solvers, GPU's speedup against CPU is only visible when matrix size is in the thousands. Hopefully more sparse solvers can be added in the future, which will likely benefit the block sparse structure of DMRG with quantum numbers.
+In general, two types of operations are most common in DMRG: (1) tensor multiplication; (2) SVD or Eigen decomposition. For CUDA, the first is super fast and efficient (this project can switch between "transpose + matrix multiplication + transpose", or the cutensor implementation of https://github.com/springer13/tcl). However, SVD or Eigen decomposition does not benefit as much from a GPU, and it comes with big overhead. For dense SVD and Eigen solvers, GPU's speedup against CPU is only visible when matrix size is in the thousands, but this speedup grows with matrix size. Hopefully more sparse solvers can be added in the future, which will likely benefit the block sparse structure of quantum-number DMRG with the massive parallelism of GPU.
 
 Latest benchmark of the current code on a EVGA RTX 3090 FTW3 Ultra:
 ```
