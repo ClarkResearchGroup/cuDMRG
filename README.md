@@ -9,7 +9,7 @@ To get some sense of how cuda compares with numpy, it is recommended to run benc
 
 In general, two types of operations are most common in DMRG: (1) tensor multiplication; (2) SVD or Eigen decomposition. For CUDA, the first is super fast and efficient (this project can switch between "transpose + matrix multiplication + transpose", or the cutensor implementation of https://github.com/springer13/tcl). However, SVD or Eigen decomposition does not benefit as much from a GPU, and it comes with big overhead. For dense SVD and Eigen solvers, GPU's speedup against CPU is only visible when matrix size is in the thousands, but this speedup grows with matrix size. Hopefully more sparse solvers can be added in the future, which will likely benefit the block sparse structure of quantum-number DMRG with the massive parallelism of GPU.
 
-Latest benchmark of the current code on a EVGA RTX 3090 FTW3 Ultra:
+Latest benchmark of the current code on a EVGA RTX 3090 FTW3 Ultra (L=100, svd error = 1e-16, max bond dimension=1000, Heisenberg chain):
 ```
 [21:01:54 cuDMRG.apps.dmrgINFO] sweep = 0, E = -43.14847950275731, max_dim = 4
 [21:01:54 cuDMRG.apps.dmrgINFO] sweep = 1, E = -44.09681238309175, max_dim = 16
